@@ -337,3 +337,48 @@ print(f"{permanencia_rede_pct:.1f}%")
 print(f"{permanencia_meio_pct:.1f}%")
 print(f"{permanencia_fundo_pct:.1f}%")
 
+# OUTROS GRÁFICOS
+
+#Se a correlação for muito alta, seu corpo está respondendo linearmente ao esforço.
+
+#Se for fraca, pode indicar fadiga ou aquecimento incompleto.
+
+import seaborn as sns
+
+sns.scatterplot(
+    data=df, x="Frequência Cardíaca (Bpm)", y="Energia ativa (Kj/min)"
+)
+plt.title("Correlação FC × Energia ativa")
+plt.show()
+
+
+#FC vs Distância percorrida, Mostra se o aumento de frequência está ligado
+#a movimentação ou mais esforço local (braço/saque).
+sns.scatterplot(
+    data=df, x="Frequência Cardíaca (Bpm)", y="Distância percorrida (Km/min)"
+)
+plt.title("Correlação FC × Distância percorrida")
+plt.show()
+
+#Heatmap de correlações gerais
+# Insight:
+#Vê rapidamente se FC está mais ligada à energia ou à distância.
+#Ideal pra relatórios de TCC (visual e técnico).
+
+sns.heatmap(df.corr(numeric_only=True), annot=True, cmap="Reds")
+plt.title("Mapa de Correlação entre Variáveis")
+plt.show()
+
+#Zonas de intensidade (FC × Energia)
+# Insight:
+#Você pode ver suas “zonas metabólicas” durante o jogo.
+#Excelente para cruzar com resultado (vitória/derrota).
+
+sns.kdeplot(
+    data=df,
+    x="Frequência Cardíaca (Bpm)",
+    y="Energia ativa (Kj/min)",
+    fill=True, cmap="Reds"
+)
+plt.title("Zonas de intensidade - FC x Energia")
+plt.show()
